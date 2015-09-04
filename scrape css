@@ -1,0 +1,27 @@
+ puts "got name?"
+	# puts "start city..."
+	# if browser.has_css?('table.zebra tbody tr:nth-child(3) td:nth-child(2) a:nth-child(1)')
+	# 	city = browser.all('table.zebra tbody tr:nth-child(3) td:nth-child(2) a:nth-child(1)').first.text
+	# 	puts city
+	# 	cities << city
+	# else
+	# 	city = "no city provided" 
+	# 	cities << city
+	# end
+	# puts "got city?"
+
+	# if browser.has_css?('table.zebra tbody tr:nth-child(4) td:nth-child(2) a:nth-child(1)')
+	# 	province = browser.all('table.zebra tbody tr:nth-child(4) td:nth-child(2) a:nth-child(1)').first.text
+	# 	provinces << province
+	# else
+	# 	province = "no province provided"
+	# 	provinces << province
+	# end
+
+	# if browser.has_css?('table tbody tr td a.jrButtonLink')
+	# 	website = browser.all('table tbody tr td a.jrButtonLink').first['href']
+	# 	websites << website
+	# else
+	# 	website = "no website provided"
+	# 	websites << website
+	# end
