@@ -42,7 +42,7 @@ def getNumPages(home_page)
 	return num_pages = (num_results.to_f/10).ceil
 end
 
-def getWesternCapePages(url_first, url_second, array)
+def getProvincePages(url_first, url_second, array)
 	page_number = 1
 	page = accessingHTML(url_first + "#{page_number}" + url_second)
 	
@@ -50,7 +50,7 @@ def getWesternCapePages(url_first, url_second, array)
 	while page_number <= num_pages
 		page_url = url_first + "#{page_number}" + url_second
 		array << page_url
-		puts "stored Western Cape page #{page_number}" 
+		puts "stored province page #{page_number}"
 		page_number += 1
 	end
 end
@@ -74,9 +74,19 @@ def getPrivateSchoolPages(url_first, url_second, array, provinces)
 end
 
 def getSchoolLinks(array_of_pages, array)
-	#iterate through array_of_pages
-	#find links
-	#store links
+	link_count=1
+	array_of_pages.each do |url|
+		page = accessingHTML(url)
+		links_element = page.css('tr td div div a')
+		links_element.each do |element|
+			link = "https://www.schoolguide.co.za/" + element['href']
+			if link.end_with? ".html"
+				array << link
+				puts "got link no. #{link_count}"
+				link_count+=1
+			end
+		end
+	end
 end
 
 #instantiate list vars and get lists
@@ -92,8 +102,13 @@ school_type.shift
 westernCapePages = []
 url_first = "https://www.schoolguide.co.za/all-in/search-results.html?page="
 url_second = "&order=featured&query=all&jr_province=western-cape"
-getWesternCapePages(url_first, url_second, westernCapePages)
+getProvincePages(url_first, url_second, westernCapePages)
 
+#instantiate Gauteng array and get pages
+gautengPages = []
+url_first = "https://www.schoolguide.co.za/all-in/search-results.html?page="
+url_second = "&order=featured&query=all&jr_province=gauteng"
+getProvincePages(url_first, url_second, gautengPages)
 
 #instantiate Private School array and get pages
 privatSchoolPages = []
@@ -101,18 +116,34 @@ url_first = "https://www.schoolguide.co.za/schools/private-schools/search-result
 url_second = "&order=featured&query=all&jr_province="
 getPrivateSchoolPages(url_first, url_second, privatSchoolPages, provinces)
 
-#write arrays to CSV
-CSV.open("westernCape.csv", "w") do |csv|
+westernCapeLinks = []
+privateSchoolLinks = []
+gautengSchoolLinks = []
+
+link_count = 1
+
+#Get links from pages
+getSchoolLinks(westernCapePages, westernCapeLinks)
+getSchoolLinks(privatSchoolPages, privateSchoolLinks)
+getSchoolLinks(gautengPages, gautengSchoolLinks)
+
+#write Western Cape links to CSV
+CSV.open("westernCapeLinks.csv", "w") do |csv|
   puts "writing Western Cape pages to CSV..."
-  csv << westernCapePages
+  csv << westernCapeLinks
   puts "success"
 end
 
-CSV.open("privatSchools.csv", "w") do |csv|
-  puts "writing Private School pages to CSV..."
-  csv << privatSchoolPages
+#write Gauteng links to CSV
+CSV.open("gautengPages.csv", "w") do |csv|
+  puts "writing Gauteng pages to CSV..."
+  csv << gautengSchoolLinks
   puts "success"
 end
 
-
-
+#write private school links to CSV
+CSV.open("privateSchoolLinks.csv", "w") do |csv|
+  puts "writing private school pages to CSV..."
+  csv << privateSchoolLinks
+  puts "success"
+end
