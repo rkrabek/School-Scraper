@@ -3,9 +3,10 @@
 #####Leila Hofer and Robert Krabek
 
 ###About
-   The two functional files in this repository are 
-    1. get_school_urls.rb which grabs the links to the individual school pages from the schoolguide website
-    2. final_scrape.rb which accesses the individual school pages and grabs contact information from each page  
+   The two functional files in this repository are:
+   
+    1. "get_school_urls.rb" which grabs the links to the individual school pages from the schoolguide website
+    2. "final_scrape.rb" which accesses the individual school pages and grabs contact information from each page  
 
 ###Code to run:
     1. run the following code in the terminal below to start the scrape: 
